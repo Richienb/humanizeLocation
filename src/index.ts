@@ -28,7 +28,7 @@ import axios from 'axios';
 import * as Promise from 'bluebird';
 
 /**
- * Humanize a set of coordinated
+ * Humanize a set of coordinates
  * @method
  * @param {string|number} latitude - The latitude of the location, encoded as a string or a number
  * @param {string|number} longtitude - The longtitude the of the location, encoded as a string or a number
