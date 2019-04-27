@@ -44,12 +44,11 @@ export function humanizeLocation(latitude: string | number, longtitude: string |
                 lon: longtitude
             }
         })
-            .then(res => {
-                const data = res.data
+            .then(({ data }) => {
                 if (format === true) resolve(data.display_name)
                 if (format === false) resolve(data.address)
                 if (typeof format === "object") resolve(format.map(i => data.address[i]).join(", "))
             })
-            .catch(err => reject(err))
+            .catch((err): any => reject(err))
     })
 }
