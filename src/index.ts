@@ -24,8 +24,8 @@
  * SOFTWARE.
  */
 
-import axios from 'axios';
-import * as Promise from 'bluebird';
+import fetch from "cross-fetch"
+import * as Promise from "bluebird"
 
 /**
  * Humanize a set of coordinates
@@ -37,18 +37,19 @@ import * as Promise from 'bluebird';
  */
 export function humanizeLocation(latitude: string | number, longtitude: string | number, format: Array<string> | boolean = true): Promise<string | {}> {
     return new Promise((resolve, reject) => {
-        axios.get(`https://nominatim.openstreetmap.org/reverse`, {
-            params: {
-                format: "json",
-                lat: latitude,
-                lon: longtitude
-            }
-        })
-            .then(({ data }) => {
-                if (format === true) resolve(data.display_name)
-                if (format === false) resolve(data.address)
-                if (typeof format === "object") resolve(format.map(i => data.address[i]).join(", "))
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longtitude}`)
+            .then((res) => {
+                if (res.status >= 200 && res.status < 300) return Promise.resolve(res)
+                else return Promise.reject(new Error(res.statusText))
             })
+            .then(res => res.json())
+            .then(
+                data => {
+                    if (format === true) resolve(data.display_name)
+                    if (format === false) resolve(data.address)
+                    if (typeof format === "object") resolve(format.map((i) => data.address[i]).join(", "))
+                }
+            )
             .catch((err): any => reject(err))
     })
 }
