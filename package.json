@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "@types/bluebird": "^3.5.26",
-        "axios": "^0.18.1",
+        "axios": "^0.19.0",
         "bluebird": "^3.5.4",
         "cross-fetch": "^3.0.3"
     },
